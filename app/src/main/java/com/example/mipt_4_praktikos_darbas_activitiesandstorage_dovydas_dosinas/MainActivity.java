@@ -53,8 +53,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ListView listView=(ListView) findViewById(R.id.listView);
-        notes.add("Example note");
 
+        SharedPreferences sharedPreferences = getApplication().getSharedPreferences("com.example.mipt_4_praktikos_darbas_activitiesandstorage_dovydas_dosinas", Context.MODE_PRIVATE);
+        HashSet<String> set =(HashSet) sharedPreferences.getStringSet("notes", null);
+        if (set == null){
+            notes.add("Example note");
+        } else {
+            notes = new ArrayList<>(set);
+        }
        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, notes);
 
         listView.setAdapter(arrayAdapter);
@@ -87,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 HashSet<String> set = new HashSet(MainActivity.notes);
 
-                                sharedPreferences.edit().putStringSet("notes", set);
+                                sharedPreferences.edit().putStringSet("notes", set).apply();
                             }
                         })
                         .setNegativeButton("No", null)

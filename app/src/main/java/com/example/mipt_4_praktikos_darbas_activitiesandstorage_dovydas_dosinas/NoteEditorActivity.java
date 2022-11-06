@@ -35,7 +35,7 @@ public class NoteEditorActivity extends AppCompatActivity {
 
             HashSet<String> set = new HashSet(MainActivity.notes);
 
-            sharedPreferences.edit().putStringSet("notes", set);
+            sharedPreferences.edit().putStringSet("notes", set).apply();
 
         }
 
